@@ -1,0 +1,9 @@
+package: github.com/itpkg/ant
+import:
+- package: github.com/urfave/cli
+- package: github.com/PuerkitoBio/goquery
+- package: github.com/andybalholm/cascadia
+- package: golang.org/x/net
+  subpackages:
+  - html
+- package: github.com/op/go-logging
