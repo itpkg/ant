@@ -1,8 +1,9 @@
-package main
+package claw
 
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -23,8 +24,8 @@ func claw(_url string) error {
 	if err != nil {
 		return err
 	}
-	log.Infof("GET %s", _url)
-	log.Infof("host=%s, path=%s", host, home)
+	log.Printf("GET %s", _url)
+	log.Printf("host=%s, path=%s", host, home)
 	doc, err := goquery.NewDocument(_url)
 	if err != nil {
 		return err
@@ -35,24 +36,24 @@ func claw(_url string) error {
 	// }
 	doc.Find("a").Each(func(i int, s *goquery.Selection) {
 		if href, ok := s.Attr("href"); ok {
-			log.Infof("FIND %s", href)
+			log.Printf("FIND %s", href)
 			if !strings.HasPrefix(href, "http") {
 
 			}
 
 			hos, hom, err := parse(href)
 			if err != nil {
-				log.Errorf("bad parse %s: %v", href, err)
+				log.Printf("bad parse %s: %v", href, err)
 				return
 			}
 
-			log.Infof("host=%s, path=%s", hos, hom)
+			log.Printf("host=%s, path=%s", hos, hom)
 
 			if (host == "" || hos == host) && strings.HasPrefix(hom, home) {
 				//claw(href)
 				return
 			} else {
-				log.Warningf("INGNORE")
+				log.Printf("INGNORE")
 			}
 		}
 	})
